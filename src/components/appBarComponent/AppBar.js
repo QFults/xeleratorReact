@@ -47,6 +47,7 @@ const styles = {
     paddingLeft: '1.5em'
   }
 }
+const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
 
 class ButtonAppBar extends React.Component {
   state = {
@@ -110,8 +111,8 @@ class ButtonAppBar extends React.Component {
     )
 
     return (
-      <div className={classes.root} >
-        <AppBar position='static' className={classes.bar}>
+      <div className={classes.root} style={{paddingTop: '56px'}} >
+        <AppBar position='fixed' className={classes.bar}>
           <Toolbar>
             <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color='inherit' aria-label='Menu'>
               <MenuIcon />
@@ -127,6 +128,8 @@ class ButtonAppBar extends React.Component {
           open={this.state.left}
           onClose={this.toggleDrawer('left', false)}
           onOpen={this.toggleDrawer('left', true)}
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
         >
           <div
             tabIndex={0}
