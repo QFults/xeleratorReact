@@ -120,7 +120,7 @@ class ButtonAppBar extends React.Component {
     )
 
     return (
-      <div className={classes.root} style={{paddingTop: '56px'}} >
+      <div className={classes.root} style={{ paddingTop: '56px' }} >
         <AppBar position='fixed' className={classes.bar}>
           <Toolbar>
             <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color='inherit' aria-label='Menu'>
