@@ -4,6 +4,8 @@ import './App.css'
 import About from './components/aboutComponent/About'
 import ButtonAppBar from './components/appBarComponent/AppBar'
 import Social from './components/socialComponent/Social'
+import FormModal from './components/formModalComponent/FormModal'
+
 class App extends Component {
   render () {
     return (
@@ -11,7 +13,6 @@ class App extends Component {
         <ButtonAppBar />
         <About />
         <Social />
-
       </div>
     )
   }

@@ -8,14 +8,15 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import Modal from '@material-ui/core/Modal'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@material-ui/core/Avatar'
+import Paper from '@material-ui/core/Paper'
+import Form from '../formComponent/Form'
 
 const styles = {
   list: {
@@ -59,16 +60,21 @@ const styles = {
   },
   rest: {
     paddingLeft: '1.5em'
-  }
+  },
+  // paper: {
+  //   position: 'absolute',
+  //   width: theme.spacing.unit * 50,
+  //   backgroundColor: theme.palette.background.paper,
+  //   boxShadow: theme.shadows[5],
+  //   padding: theme.spacing.unit * 4,
+  // },
 }
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
 
 class ButtonAppBar extends React.Component {
   state = {
-    top: false,
     left: false,
-    bottom: false,
-    right: false,
+    open: false
   }
 
   toggleDrawer = (side, open) => () => {
@@ -76,51 +82,39 @@ class ButtonAppBar extends React.Component {
       [side]: open,
     })
   }
+  handleOpen = () => {
+    this.toggleDrawer('left', false)
+    setTimeout(() => this.setState({ open: true }), 500)
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
+  }
 
   render() {
     const { classes } = this.props
 
-    const sideList = (
-      <div className={classes.list}>
-        <List>
-          <ListItem dense button>
-            <Avatar alt="Quinton Fults" src={require('../../images/QF.png')} />
-            <ListItemText classes={{ primary: classes.links }} primary={`Quinton Fults`} secondary={<i style={{fontSize: '0.75em', color: 'white'}}>quinton@xelerator.io</i>} />
-          </ListItem>
-        </List>
-        <Divider />
-        <List className={classes.list}>
-          <ListItem>
-            <ListItemIcon children={<img src={require('../../images/ytLogo.png')} alt='logo' className={classes.icons} />} />
-            <ListItemText classes={{primary: classes.links}} primary={'YouTube'} />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon children={<img src={require('../../images/igLogo.png')} alt='logo' className={classes.icons} />} />
-            <ListItemText classes={{primary: classes.links}} primary={'Instagram'} />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon children={<img src={require('../../images/twLogo.png')} alt='logo' className={classes.icons} />} />
-            <ListItemText classes={{primary: classes.links}} primary={'Twitter'} />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon children={<img src={require('../../images/mlLogo.png')} alt='logo' className={classes.icons} />} />
-            <ListItemText classes={{primary: classes.links}} primary={'Contact Us'} />
-          </ListItem>
-        </List>
-        {/* <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
-      </div>
-    )
-
     return (
       <div className={classes.root} style={{ paddingTop: '56px' }} >
+        <Modal
+        style={{top: '50%', width: '80%', margin: 'auto'}}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+        <Paper elevation={1} style={{backgroundColor: '#212121'}}>
+        <Form />
+          </Paper>
+          {/* <Paper className={classes.root} elevation={1}>
+            <Typography variant="h6" id="modal-title">
+              Text in a modal
+            </Typography>
+            <Typography variant="subtitle1" id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </Paper> */}
+        </Modal>
         <AppBar position='fixed' className={classes.bar}>
           <Toolbar>
             <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color='inherit' aria-label='Menu'>
@@ -148,7 +142,33 @@ class ButtonAppBar extends React.Component {
             onKeyDown={this.toggleDrawer('left', false)}
             
           >
-            {sideList}
+            <div className={classes.list}>
+              <List>
+                <ListItem dense button>
+                  <Avatar alt="Quinton Fults" src={require('../../images/QF.png')} />
+                  <ListItemText classes={{ primary: classes.links }} primary={`Quinton Fults`} secondary={<i style={{ fontSize: '0.75em', color: 'white' }}>quinton@xelerator.io</i>} />
+                </ListItem>
+              </List>
+              <Divider />
+              <List className={classes.list}>
+                <ListItem onClick={() => window.location = 'http://youtube.com'}>
+                  <ListItemIcon children={<img src={require('../../images/ytLogo.png')} alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} primary={'YouTube'} />
+                </ListItem>
+                <ListItem onClick={() => window.location = 'http://instagram.com'}>
+                  <ListItemIcon children={<img src={require('../../images/igLogo.png')} alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} primary={'Instagram'} />
+                </ListItem>
+                <ListItem onClick={() => window.location = 'http://twitter.com'}>
+                  <ListItemIcon children={<img src={require('../../images/twLogo.png')} alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} primary={'Twitter'} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon children={<img src={require('../../images/mlLogo.png')} alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} onClick={this.handleOpen} primary={'Contact Us'} />
+                </ListItem>
+              </List>
+            </div>
           </div>
         </SwipeableDrawer>
       </div>
