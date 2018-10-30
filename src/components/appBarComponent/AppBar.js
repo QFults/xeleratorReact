@@ -17,6 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Form from '../formComponent/Form'
+import SignIn from '../signInComponent/SignIn'
 
 const styles = {
   list: {
@@ -106,14 +107,6 @@ class ButtonAppBar extends React.Component {
         <Paper elevation={1} style={{backgroundColor: '#212121'}}>
         <Form />
           </Paper>
-          {/* <Paper className={classes.root} elevation={1}>
-            <Typography variant="h6" id="modal-title">
-              Text in a modal
-            </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Paper> */}
         </Modal>
         <AppBar position='fixed' className={classes.bar}>
           <Toolbar>
@@ -124,7 +117,7 @@ class ButtonAppBar extends React.Component {
               <img src={require('../../images/xelLogo.png')} alt='logo' className={classes.icon} />
               <span className={classes.rest}>elerator</span>
             </Typography>
-            <Button color='inherit'>Sign Out</Button>
+            <SignIn />
           </Toolbar>
         </AppBar>
         <SwipeableDrawer
