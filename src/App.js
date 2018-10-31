@@ -54,7 +54,8 @@ class App extends Component {
           <div>
             <ButtonAppBar uiConfig={this.uiConfig} runAuth={firebase.auth()} user={() => this.state.isSignedIn ? this.state.user : null} />
             <Route exact path='/' render={ () => <Home />} />
-            <Route path='/dashboard' render={ () => this.state.isSignedIn ? <Dashboard /> : <Home />} />
+            <Route path='/dashboard' render={ () => <Dashboard />} />
+            {/* <Route path='/dashboard' render={ () => this.state.isSignedIn ? <Dashboard /> : <Home />} /> */}
           </div>
         </Router>
       </div>
