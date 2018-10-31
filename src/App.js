@@ -1,16 +1,62 @@
 import React, { Component } from 'react'
 import './App.css'
-import About from './components/aboutComponent/About'
 import ButtonAppBar from './components/appBarComponent/AppBar'
-import Social from './components/socialComponent/Social'
+import Home from './components/homeComponent/Home'
+import Dashboard from './components/dashboardComponent/Dashboard'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import firebase from 'firebase'
+
+const config = {
+  apiKey: "AIzaSyAe0xQ2XFcEDFVmGeGBRuEUnIKdoODZBX0",
+  authDomain: "xelerator-coding.firebaseapp.com",
+  databaseURL: "https://xelerator-coding.firebaseio.com",
+  projectId: "xelerator-coding",
+  storageBucket: "xelerator-coding.appspot.com",
+  messagingSenderId: "91210217411"
+}
+
+firebase.initializeApp(config)
 
 class App extends Component {
+  state = {
+    uid: localStorage.getItem('uid'),
+    isSignedIn: false,
+    user: {}
+  }
+
+  uiConfig = {
+    signInFlow: 'popup',
+    signInSuccessUrl: '/dashboard',
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ]
+  }
+
+  componentDidMount() {
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+      (user) => {
+        // alert(JSON.stringify(user))
+        localStorage.setItem('uid', user.uid)
+        this.setState({ isSignedIn: !!user, uid: user.uid })
+      }
+    )
+  }
+  componentWillUnmount() {
+    this.unregisterAuthObserver();
+  }
+
   render () {
     return (
       <div className='App'>
-        <ButtonAppBar />
-        <About />
-        <Social />
+        <Router>
+          <div>
+            <ButtonAppBar uiConfig={this.uiConfig} runAuth={firebase.auth()} user={() => this.state.isSignedIn ? this.state.user : null} />
+            <Route exact path='/' render={ () => <Home />} />
+            <Route path='/dashboard' render={ () => this.state.isSignedIn ? <Dashboard /> : <Home />} />
+          </div>
+        </Router>
       </div>
     )
   }

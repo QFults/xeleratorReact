@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -10,17 +10,8 @@ import withMobileDialog from '@material-ui/core/withMobileDialog'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import SvgIcon from '@material-ui/core/SvgIcon'
-
-const config = {
-  apiKey: "AIzaSyAe0xQ2XFcEDFVmGeGBRuEUnIKdoODZBX0",
-  authDomain: "xelerator-coding.firebaseapp.com",
-  databaseURL: "https://xelerator-coding.firebaseio.com",
-  projectId: "xelerator-coding",
-  storageBucket: "xelerator-coding.appspot.com",
-  messagingSenderId: "91210217411"
-}
-
-firebase.initializeApp(config)
+import { Route, Redirect } from 'react-router'
+import Dashboard from '../dashboardComponent/Dashboard'
 
 const HomeIcon = props => {
   return (
@@ -33,7 +24,6 @@ const HomeIcon = props => {
 class SignIn extends React.Component {
   state = {
     open: false,
-    isSignedIn: false,
   }
 
   handleClickOpen = () => {
@@ -42,28 +32,6 @@ class SignIn extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false })
-  }
-
-  uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    ],
-    callbacks: {
-      signInSuccessWithAuthResult: () => false
-    }
-  }
-
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-      (user) => this.setState({ isSignedIn: !!user })
-    )
-  }
-
-  componentWillUnmount() {
-    this.unregisterAuthObserver();
   }
 
   render() {
@@ -80,7 +48,7 @@ class SignIn extends React.Component {
         >
           <DialogTitle id="responsive-dialog-title">Sign In and let's start learning.</DialogTitle>
           <DialogContent>
-            <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+            <StyledFirebaseAuth uiConfig={this.props.uiConfig} firebaseAuth={this.props.runAuth}/>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

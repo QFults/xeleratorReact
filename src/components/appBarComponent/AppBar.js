@@ -75,7 +75,8 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
 class ButtonAppBar extends React.Component {
   state = {
     left: false,
-    open: false
+    open: false,
+    here: false
   }
 
   toggleDrawer = (side, open) => () => {
@@ -117,7 +118,7 @@ class ButtonAppBar extends React.Component {
               <img src={require('../../images/xelLogo.png')} alt='logo' className={classes.icon} />
               <span className={classes.rest}>elerator</span>
             </Typography>
-            <SignIn />
+            <SignIn uiConfig={this.props.uiConfig} runAuth={this.props.runAuth}/>
           </Toolbar>
         </AppBar>
         <SwipeableDrawer
