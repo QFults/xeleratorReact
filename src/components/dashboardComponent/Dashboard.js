@@ -1,9 +1,14 @@
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import { Scatter, Pie } from 'react-chartjs-2'
 import Divider from '@material-ui/core/Divider'
+import Snack from '../snackComponent/Snack'
+import ProfEdit from '../profEditComponent/ProfEdit'
 
 const scatterData = {
   labels: ['Scatter'],
@@ -64,9 +69,28 @@ const styles = theme => ({
 })
 
 class Dashboard extends Component {
+  state = {
+    open: false,
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
   render () {
     return (
       <Fragment>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <ProfEdit />
+        </Modal>
         <Paper className={this.props.classes.root} elevation={1} style={{ margin: '1rem' }}>
           <Scatter data={scatterData} />
         </Paper>
@@ -74,6 +98,7 @@ class Dashboard extends Component {
         <Paper className={this.props.classes.root} elevation={1} style={{ margin: '1rem' }}>
           <Pie data={pieData} />
         </Paper>
+        <Snack executable={this.handleOpen} label='SETUP' message={() => <span id='message-id'>Welcome To Xelerator! Click here to begin setting up your profile.</span>} />
       </Fragment>
     )
   }
