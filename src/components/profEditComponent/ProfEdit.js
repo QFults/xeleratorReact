@@ -61,7 +61,7 @@ render() {
         <CardContent>
           <Typography component='div'>
             <Grid container className={this.props.classes.root}>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Grid item xs={5} sm={5} md={6} lg={6}>
                 <TextField
                   className={classNames(this.props.classes.margin, this.props.classes.textField)}
                   variant='outlined'
@@ -71,7 +71,8 @@ render() {
                   margin='normal'
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Grid item xs={2} sm={2} />
+              <Grid item xs={5} sm={5} md={6} lg={6}>
                 <TextField
                   className={classNames(this.props.classes.margin, this.props.classes.textField)}
                   variant='outlined'

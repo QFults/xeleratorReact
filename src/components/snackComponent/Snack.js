@@ -33,19 +33,25 @@ class Snack extends React.Component {
   render() {
     const { classes } = this.props
     return (
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.open}
-          onClose={this.handleClose}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={this.props.message()}
-          action={[
-            <Button key="undo" color="secondary" size="small" onClick={() => {
+      <Snackbar
+        onClick={() => {
+          if (this.props.label === 'SETUP') {
+            this.props.executable()
+            this.handleClose()
+          } else { return }
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={this.state.open}
+        onClose={this.handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={this.props.message()}
+        action={this.props.label === 'SETUP' ? [] : [
+            <Button key={this.props.label} color="secondary" size="small" onClick={() => {
               this.props.executable()
               this.handleClose()
             }}>
@@ -59,9 +65,9 @@ class Snack extends React.Component {
               onClick={this.handleClose}
             >
               <CloseIcon />
-            </IconButton>,
+            </IconButton>
           ]}
-        />
+      />
     )
   }
 }
