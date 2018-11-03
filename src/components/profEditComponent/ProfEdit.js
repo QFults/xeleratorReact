@@ -54,8 +54,8 @@ render() {
     <Card className={this.props.classes.card}>
       <CardActionArea>
         <Avatar
-          alt='Quinton Fults'
-          src={require('../../images/QF.png')}
+          alt={this.props.user.name}
+          src={this.props.user.photo}
           className={`${this.props.classes.avatar} ${this.props.classes.bigAvatar}`}
         />
         <CardContent>

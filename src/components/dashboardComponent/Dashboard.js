@@ -73,6 +73,11 @@ class Dashboard extends Component {
     open: false,
   };
 
+  // componentDidMount () {
+  //   console.log(localStorage.getItem('firebaseui::rememberedAccounts'))
+  //   console.log(this.props.user)
+  // }
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -80,6 +85,7 @@ class Dashboard extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
   render () {
     return (
       <Fragment>
@@ -89,7 +95,7 @@ class Dashboard extends Component {
           open={this.state.open}
           onClose={this.handleClose}
         >
-          <ProfEdit />
+          <ProfEdit user={this.props.user}/>
         </Modal>
         <Paper className={this.props.classes.root} elevation={1} style={{ margin: '1rem' }}>
           <Scatter data={scatterData} />
@@ -98,7 +104,7 @@ class Dashboard extends Component {
         <Paper className={this.props.classes.root} elevation={1} style={{ margin: '1rem' }}>
           <Pie data={pieData} />
         </Paper>
-        <Snack executable={this.handleOpen} label='SETUP' message={() => <span id='message-id'>Welcome To Xelerator! Click here to begin setting up your profile.</span>} />
+        <Snack executable={this.handleOpen} label='SETUP' message={() => <span id='message-id'>{`Welcome ${this.props.user.name ? this.props.user.name : ''}! Click here to begin setting up your profile.`}</span>} />
       </Fragment>
     )
   }

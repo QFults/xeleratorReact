@@ -18,6 +18,8 @@ import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Form from '../formComponent/Form'
 import SignIn from '../signInComponent/SignIn'
+import Home from '@material-ui/icons/Home'
+import ViewQuilt from '@material-ui/icons/ViewQuilt'
 
 const styles = {
   list: {
@@ -139,8 +141,19 @@ class ButtonAppBar extends React.Component {
             <div className={classes.list}>
               <List>
                 <ListItem dense button>
-                  <Avatar alt="Quinton Fults" src={require('../../images/QF.png')} />
-                  <ListItemText classes={{ primary: classes.links }} primary={`Quinton Fults`} secondary={<i style={{ fontSize: '0.75em', color: 'white' }}>quinton@xelerator.io</i>} />
+                  <Avatar alt={this.props.user.name} src={this.props.user.photo} />
+                  <ListItemText classes={{ primary: classes.links }} primary={this.props.user.name} secondary={<i style={{ fontSize: '0.75em', color: 'white' }}>{this.props.user.email}</i>} />
+                </ListItem>
+              </List>
+              <Divider />
+              <List>
+                <ListItem dense button onClick={() => window.location = '/'}>
+                  <ListItemIcon style={{color:'white'}} children={<Home alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} primary={'Home'} />
+                </ListItem>
+                <ListItem dense button onClick={() => window.location = '/dashboard'}>
+                  <ListItemIcon style={{color:'white'}} children={<ViewQuilt alt='logo' className={classes.icons} />} />
+                  <ListItemText classes={{ primary: classes.links }} primary={'Dashboard'} />
                 </ListItem>
               </List>
               <Divider />

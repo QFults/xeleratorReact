@@ -39,7 +39,13 @@ class App extends Component {
       (user) => {
         // alert(JSON.stringify(user))
         localStorage.setItem('uid', user.uid)
-        this.setState({ isSignedIn: !!user, uid: user.uid })
+        console.log(user)
+        this.setState({ isSignedIn: !!user, uid: user.uid, user: {
+          name : user.displayName,
+          email: user.email,
+          photo: (user.photoURL ? user.photoURL : require('./images/default.jpg'))
+        } })
+        console.log(this.state.user)
       }
     )
   }
@@ -52,9 +58,9 @@ class App extends Component {
       <div className='App'>
         <Router>
           <div>
-            <ButtonAppBar uiConfig={this.uiConfig} runAuth={firebase.auth()} user={() => this.state.isSignedIn ? this.state.user : null} />
+            <ButtonAppBar uiConfig={this.uiConfig} runAuth={firebase.auth()} user={this.state.user} />
             <Route exact path='/' render={ () => <Home />} />
-            <Route path='/dashboard' render={ () => <Dashboard />} />
+            <Route path='/dashboard' render={ () => <Dashboard user={this.state.user}/>} />
             {/* <Route path='/dashboard' render={ () => this.state.isSignedIn ? <Dashboard /> : <Home />} /> */}
           </div>
         </Router>
